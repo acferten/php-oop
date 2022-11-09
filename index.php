@@ -1,43 +1,82 @@
 <?php
 
-class Cat
+class Post
 {
-    private string $name;
-    private string $color;
+    private $title;
+    private $text;
 
-    public function __construct(string $name, string $color)
+    public function __construct(string $title, string $text)
     {
-        $this->name = $name;
-        $this->color = $color;
+        $this->title = $title;
+        $this->text = $text;
     }
 
-    public function sayHello()
+    public function getTitle()
     {
-        echo 'Привет! Меня зовут ' . $this->name . '.' . ' Мой окрас ' . $this->color . '. ';
+        return $this->title;
     }
 
-    public function setName(string $name)
+    public function setTitle($title): void
     {
-        $this->name = $name;
+        $this->title = $title;
     }
 
-    public function setColor(string $color)
+    public function getText()
     {
-        $this->color = $color;
+        return $this->text;
     }
 
-    public function getName(): string
+    public function setText($text): void
     {
-        return $this->name;
-    }
-
-    public function getColor(): string
-    {
-        return $this->color;
+        $this->text = $text;
     }
 }
 
-$cat1 = new Cat('Снежок', 'Белый');
-$cat2 = new Cat('Барсик', 'Рыжий');
-echo $cat1->sayHello();
-echo $cat2->sayHello();
+class Lesson extends Post
+{
+    private $homework;
+
+    public function __construct(string $title, string $text, string $homework)
+    {
+        parent::__construct($title, $text);
+        $this->homework = $homework;
+    }
+
+    public function getHomework(): string
+    {
+        return $this->homework;
+    }
+
+    public function setHomework(string $homework): void
+    {
+        $this->homework = $homework;
+    }
+}
+
+$lesson = new Lesson('Заголовок', 'Текст', 'Домашка');
+var_dump($lesson);
+
+class PaidLesson extends Lesson
+{
+    private float $price;
+
+    public function __construct(string $title, string $text, string $homework, float $price)
+    {
+        parent::__construct($title, $text, $homework);
+        $this->price = $price;
+    }
+
+    public function setPrice(float $price)
+    {
+        $this->price = $price;
+    }
+
+    public function getPrice(): float
+    {
+        return $this->price;
+    }
+}
+
+$paidlesson = new PaidLesson('Урок о наследовании в PHP', 'Лол, кек, чебурек', 'Ложитесь спать, утро вечера мудренее', 99.90);
+echo "<p>Homework here:</p>";
+var_dump($paidlesson);
