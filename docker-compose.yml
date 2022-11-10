@@ -26,7 +26,7 @@ services:
     volumes:
       - ./www:/var/www
       - ./src:/var/src
-      - ./images/proxy/:/etc/nginx/conf.d/
+      - ./images/proxy:/etc/nginx/conf.d/
 
   adminer:
     image: adminer
