@@ -2,11 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <?php if ($articles['title']):?>
-    <title><?=$articles['title']?></title>
-    <?php else: ?>
     <title>Мой блог</title>
-    <?php endif ?>
     <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
@@ -19,11 +15,7 @@
     </tr>
     <tr>
         <td>
-            <?php foreach ($context['articles']['name'] as $context): ?>
-                <h2><?= $article['name'] ?></h2>
-                <p><?= $article['text'] ?></p>
-                <hr>
-            <?php endforeach; ?>
+            Привет, <?= $name ?>!!!
         </td>
 
         <td width="300px" class="sidebar">

@@ -10,6 +10,7 @@ services:
     volumes:
       - ./www:/var/www
       - ./src:/var/src
+      - ./templates:/var/templates
 
   #Image for proxy server
   proxy:
