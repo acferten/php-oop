@@ -13,12 +13,13 @@ class View
 
     public function renderHtml(string $templateName, array $vars = [])
     {
+//        echo '<pre>' . var_export($vars, true) . '</pre>';
+
         extract($vars);
         ob_start();
         include $this->templatesPath . '/' . $templateName;
         $buffer = ob_get_contents();
         ob_end_clean();
-
         echo $buffer;
     }
 }

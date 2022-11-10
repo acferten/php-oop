@@ -2,7 +2,11 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Мой блог</title>
+    <?php if ($context['title']):?>
+        <title><?=$context['title']?></title>
+    <?php else: ?>
+        <title>Страница приветствия</title>
+    <?php endif ?>
     <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
@@ -15,7 +19,7 @@
     </tr>
     <tr>
         <td>
-            Привет, <?= $name ?>!!!
+            Привет, <?= $context['name'] ?>!!!
         </td>
 
         <td width="300px" class="sidebar">

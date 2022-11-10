@@ -19,21 +19,23 @@ class MainController
             'articles' => [
                 ['name' => 'Статья 1', 'text' => 'Текст статьи 1'],
                 ['name' => 'Статья 2', 'text' => 'Текст статьи 2'],
-                ['title' => 'Главная'],
             ],
             'title' =>  'Главная'
         ];
 
-//        $articles = [
+//        $context = [
 //            ['name' => 'Статья 1', 'text' => 'Текст статьи 1'],
 //            ['name' => 'Статья 2', 'text' => 'Текст статьи 2'],
-//            ['title' => 'Главная'],
 //        ];
-        $this->view->renderHtml('main/main.php', ['articles' => $context]);
+        $this->view->renderHtml('main/main.php', ['context' => $context]);
     }
 
     public function sayHello(string $name)
     {
-        $this->view->renderHtml('main/hello.php', ['name' => $name]);
+        $context = [
+            'title' =>  'Страница приветствия',
+            'name' => $name
+        ];
+        $this->view->renderHtml('main/hello.php', ['context' => $context]);
     }
 }

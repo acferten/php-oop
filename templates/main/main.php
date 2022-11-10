@@ -2,8 +2,8 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <?php if ($articles['title']):?>
-    <title><?=$articles['title']?></title>
+    <?php if ($context['title']):?>
+    <title><?=$context['title']?></title>
     <?php else: ?>
     <title>Мой блог</title>
     <?php endif ?>
@@ -19,9 +19,11 @@
     </tr>
     <tr>
         <td>
-            <?php foreach ($context['articles']['name'] as $context): ?>
+            <?$i=0?>
+            <?php foreach ($context['articles'] as $article): ?>
                 <h2><?= $article['name'] ?></h2>
                 <p><?= $article['text'] ?></p>
+                <?$i++?>
                 <hr>
             <?php endforeach; ?>
         </td>
