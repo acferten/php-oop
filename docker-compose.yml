@@ -11,8 +11,6 @@ services:
       - ./www:/var/www
       - ./src:/var/src
       - ./templates:/var/templates
-    networks:
-      - php-nginx-postgres-network
 
   #Image for proxy server
   proxy:
@@ -26,24 +24,17 @@ services:
       - "443:443"
     depends_on:
       - web
-      - adminer
     volumes:
-      - ./:/var/www
-      - ./images/proxy/:/etc/nginx/conf.d/
-    networks:
-      - php-nginx-postgres-network
+      - ./www:/var/www
+      - ./src:/var/src
+      - ./images/proxy:/etc/nginx/conf.d/
 
   adminer:
     image: adminer
     restart: unless-stopped
     container_name: adminer
-    environment:
-      - PMA_HOST=db
-      - PMA_ABSOLUTE_URI=http://localhost:80/adminer
-    depends_on:
-      - db
-    networks:
-      - php-nginx-postgres-network
+    ports:
+      - "8080:8080"
 
   db:
     image: postgres:alpine
@@ -57,13 +48,7 @@ services:
       - "5432:5432"
     volumes:
       - dbdata:/var/lib/postgres
-    networks:
-      - php-nginx-postgres-network
 
 volumes:
   dbdata:
     driver: local
-
-networks:
-  php-nginx-postgres-network:
-    driver: bridge
