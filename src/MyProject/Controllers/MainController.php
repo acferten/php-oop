@@ -22,7 +22,6 @@ class MainController
     public function main()
     {
         $articles = $this->db->query('SELECT * FROM articles;');
-        echo '<pre>' . var_export($articles, true) . '</pre>';
-        //$this->view->renderHtml('main/main.php', ['articles' => $articles]);
+        $this->view->renderHtml('main/main.php', ['articles' => $articles]);
     }
 }
