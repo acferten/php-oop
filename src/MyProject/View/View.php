@@ -13,7 +13,6 @@ class View
 
     public function renderHtml(string $templateName, array $vars = [], int $code = 200)
     {
-//        echo '<pre>' . var_export($vars, true) . '</pre>';
         http_response_code($code);
         extract($vars);
 
