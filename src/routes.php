@@ -6,5 +6,7 @@ return [
     '~^articles/(\d+)/delete$~' => [\MyProject\Controllers\ArticlesController::class, 'delete'],
     '~^articles/add$~' => [\MyProject\Controllers\ArticlesController::class, 'add'],
     '~^users/register$~' => [\MyProject\Controllers\UsersController::class, 'signUp'],
+    '~^users/login$~' => [\MyProject\Controllers\UsersController::class, 'login'],
+    '~^users/logout$~' => [\MyProject\Controllers\UsersController::class, 'logout'],
     '~^$~' => [\MyProject\Controllers\MainController::class, 'main'],
 ];

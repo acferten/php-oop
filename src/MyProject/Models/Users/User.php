@@ -36,10 +36,30 @@ class User extends ActiveRecordEntity
         return $this->nickname;
     }
 
-    protected static function getTableName(): string
+    /**
+     * @return string
+     */
+    public function getEmail(): string
     {
-        return 'users';
+        return $this->email;
     }
+
+    /**
+     * @return string
+     */
+    public function getAuthToken(): string
+    {
+        return $this->authToken;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPasswordHash(): string
+    {
+        return $this->passwordHash;
+    }
+
 
     public static function signUp(array $userData)
     {
@@ -66,6 +86,7 @@ class User extends ActiveRecordEntity
         if (mb_strlen($userData['password']) < 8) {
             throw new InvalidArgumentException('Пароль должен быть не менее 8 символов');
         }
+
         if (static::findOneByColumn('nickname', $userData['nickname']) !== null) {
             throw new InvalidArgumentException('Пользователь с таким nickname уже существует');
         }
@@ -73,15 +94,52 @@ class User extends ActiveRecordEntity
         if (static::findOneByColumn('email', $userData['email']) !== null) {
             throw new InvalidArgumentException('Пользователь с таким email уже существует');
         }
+
         $user = new User();
         $user->nickname = $userData['nickname'];
         $user->email = $userData['email'];
         $user->passwordHash = password_hash($userData['password'], PASSWORD_DEFAULT);
-        $user->isConfirmed = false;
+        $user->isConfirmed = true;
         $user->role = 'user';
         $user->authToken = sha1(random_bytes(100)) . sha1(random_bytes(100));
         $user->save();
 
         return $user;
+    }
+
+    public static function login(array $loginData)
+    {
+        if (empty($loginData['email'])) {
+            throw new InvalidArgumentException('Не передан email');
+        }
+
+        if (empty($loginData['password'])) {
+            throw new InvalidArgumentException('Не передан password');
+        }
+
+        $user = User::findOneByColumn('email', $loginData['email']);
+        if ($user === null) {
+            throw new InvalidArgumentException('Нет пользователя с таким email');
+        }
+
+        if (!password_verify($loginData['password'], $user->getPasswordHash())) {
+            throw new InvalidArgumentException('Неправильный пароль');
+        }
+
+
+        $user->refreshAuthToken();
+        $user->save();
+
+        return $user;
+    }
+
+    protected static function getTableName(): string
+    {
+        return 'users';
+    }
+
+    private function refreshAuthToken()
+    {
+        $this->authToken = sha1(random_bytes(100)) . sha1(random_bytes(100));
     }
 }
