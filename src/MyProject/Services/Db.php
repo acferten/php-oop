@@ -2,6 +2,8 @@
 
 namespace MyProject\Services;
 
+use MyProject\Exceptions\DbException;
+
 class Db
 {
     /** @var \PDO */
@@ -12,13 +14,17 @@ class Db
     private function __construct()
     {
         $dbOptions = (require __DIR__ . '/../../settings.php')['db'];
-
-        $this->pdo = new \PDO(
-            'pgsql:host=' . $dbOptions['host'] . ';dbname=' . $dbOptions['dbname'],
-            $dbOptions['user'],
-            $dbOptions['password']
-        );
+        try {
+            $this->pdo = new \PDO(
+                'pgsql:host=' . $dbOptions['host'] . ';dbname=' . $dbOptions['dbname'],
+                $dbOptions['user'],
+                $dbOptions['password']
+            );
+        } catch (\PDOException $e) {
+            throw new DbException('Ошибка при подключении к базе данных: ' . $e->getMessage());
+        }
     }
+
 
     public static function getInstance(): self
     {
