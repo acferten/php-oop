@@ -45,6 +45,7 @@ class ArticlesController
 
         $article->save();
     }
+
     public function add(): void
     {
         $author = User::getById(1);
@@ -57,5 +58,17 @@ class ArticlesController
         $article->save();
 
         var_dump($article);
+    }
+
+    public function delete(int $id)
+    {
+        $article = Article::getById($id);
+        if ($article === null) {
+            $this->view->renderHtml('errors/404.php', [], 404);
+            return;
+        }
+        var_dump($article);
+        $article->delete();
+        echo ' Статья удалена';
     }
 }
