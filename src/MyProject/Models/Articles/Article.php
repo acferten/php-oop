@@ -47,4 +47,18 @@ class Article extends ActiveRecordEntity
     {
         return 'articles';
     }
+
+    public function setName(string $name)
+    {
+        $this->name = $name;
+    }
+
+    public function setText(string $text)
+    {
+        $this->text = $text;
+    }
+    public function setAuthorId(int $id)
+    {
+        $this->authorId = $id;
+    }
 }
