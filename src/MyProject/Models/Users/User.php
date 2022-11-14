@@ -60,6 +60,11 @@ class User extends ActiveRecordEntity
         return $this->passwordHash;
     }
 
+    public function getRole(): string
+    {
+        return $this->role;
+    }
+
 
     public static function signUp(array $userData)
     {
