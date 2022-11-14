@@ -24,20 +24,35 @@ class ArticlesController extends AbstractController
         ]);
     }
 
-    public function edit(int $articleId): void
+    public function edit(int $articleId)
     {
-        /** @var Article $article */
+        if ($this->user->getRole() != 'admin') {
+            throw new PermissionException();
+        }
+
         $article = Article::getById($articleId);
 
         if ($article === null) {
-            $this->view->renderHtml('errors/404.php', [], 404);
-            return;
+            throw new NotFoundException();
         }
 
-        $article->setName('Новое название статьи');
-        $article->setText('Новый текст статьи');
+        if ($this->user === null) {
+            throw new UnauthorizedException();
+        }
 
-        $article->save();
+        if (!empty($_POST)) {
+            try {
+                $article->updateFromArray($_POST);
+            } catch (InvalidArgumentException $e) {
+                $this->view->renderHtml('articles/edit.php', ['error' => $e->getMessage(), 'article' => $article]);
+                return;
+            }
+
+            header('Location: /articles/' . $article->getId(), true, 302);
+            exit();
+        }
+
+        $this->view->renderHtml('articles/edit.php', ['article' => $article]);
     }
 
     public function add(): void
@@ -45,7 +60,8 @@ class ArticlesController extends AbstractController
         if ($this->user === null) {
             throw new UnauthorizedException();
         }
-        if ($this->user->getRole() != 'admin'){
+
+        if ($this->user->getRole() != 'admin') {
             throw new PermissionException();
         }
 
