@@ -3,7 +3,6 @@
 namespace MyProject\Models\Articles;
 
 use MyProject\Exceptions\InvalidArgumentException;
-use MyProject\Exceptions\PermissionException;
 use MyProject\Models\ActiveRecordEntity;
 use MyProject\Models\Users\User;
 
