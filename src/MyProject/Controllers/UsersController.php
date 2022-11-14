@@ -43,7 +43,10 @@ class UsersController extends AbstractController
         $this->view->renderHtml('users/login.php');
     }
 
-    public function logout(){
-
+    public function logout()
+    {
+        setcookie('token', '', -1, '/', '', false, true);
+        header('Location: /');
     }
+
 }

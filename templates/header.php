@@ -10,12 +10,18 @@
 <table class="layout">
     <tr>
         <td colspan="2" class="header">
-            Мой блог
+            <a href="http://localhost">Мой блог</a>
         </td>
     </tr>
     <tr>
         <td colspan="2" style="text-align: right">
-            <?= !empty($user) ? 'Привет, ' . $user->getNickname() : 'Войдите на сайт' ?>
+            <?php if (!empty($user)): ?>
+                <span><?= 'Привет, ' . $user->getNickname() ?></span>
+                <a href = "http://localhost/users/logout"> | Выйти</a>
+            <?php else: ?>
+                <a href="http://localhost/users/login">Войти | </a>
+                <a href="http://localhost/users/register">Зарегистрироваться</a>
+            <?php endif; ?>
         </td>
     </tr>
     <tr>
