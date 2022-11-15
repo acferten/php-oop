@@ -8,5 +8,6 @@ return [
     '~^users/register$~' => [\MyProject\Controllers\UsersController::class, 'signUp'],
     '~^users/login$~' => [\MyProject\Controllers\UsersController::class, 'login'],
     '~^users/logout$~' => [\MyProject\Controllers\UsersController::class, 'logout'],
+    '~^articles/(\d+)/comments$~' => [\MyProject\Controllers\CommentsController::class, 'add'],
     '~^$~' => [\MyProject\Controllers\MainController::class, 'main'],
 ];

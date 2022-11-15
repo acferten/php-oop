@@ -4,7 +4,7 @@
 <h3>Комментарии</h3>
 
 <?php if ($user != null): ?>
-    <form action="/articles/add" method="post">
+    <form action="" method="post">
         <label for="text">Оставьте свое мнение</label><br>
         <textarea name="text" id="text" rows="3" cols="60"><?= $_POST['text'] ?? '' ?></textarea><br>
         <br>
