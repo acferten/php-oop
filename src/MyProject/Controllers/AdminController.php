@@ -14,8 +14,14 @@ class AdminController extends AbstractController
 {
     public function articles()
     {
-        $articles = Article::findAll();
-        $this->view->renderHtml('main/main.php', [
+        $articles = Article::orderByDate();
+        print_r($articles);
+        print_r(gettype($articles));
+        usort($articles, function($a, $b){
+            return $a['createdAt'] <=> $b['createdAt'];
+        });
+
+        $this->view->renderHtml('adminpage/articles.php', [
             'articles' => $articles,
         ]);
     }

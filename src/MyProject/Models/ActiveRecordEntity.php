@@ -37,10 +37,10 @@ abstract class ActiveRecordEntity
         return $db->query('SELECT * FROM ' . static::getTableName() . ';', [], static::class);
     }
 
-    public function orderByDate(): array
+    public static function orderByDate(): array
     {
         $db = $db = Db::getInstance();
-        return $db->query('SELECT * FROM ' . static::getTableName() . 'ORDER BY created_at;', [], static::class);
+        return $db->query('SELECT * FROM ' . static::getTableName() . ' ORDER BY created_at;', [], static::class);
     }
 
     /**
