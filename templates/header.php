@@ -17,7 +17,10 @@
         <td colspan="2" style="text-align: right">
             <?php if (!empty($user)): ?>
                 <span><?= 'Привет, ' . $user->getNickname() ?></span>
-                <a href = "http://localhost/users/logout"> | Выйти</a>
+                <a href="http://localhost/users/logout"> | Выйти</a>
+                <?php if ($user->getRole() == 'admin'): ?>
+                    <a href="http://localhost/adminpage">| Админка</a>
+                <?php endif; ?>
             <?php else: ?>
                 <a href="http://localhost/users/login">Войти | </a>
                 <a href="http://localhost/users/register">Зарегистрироваться</a>

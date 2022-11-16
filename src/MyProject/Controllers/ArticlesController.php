@@ -29,6 +29,10 @@ class ArticlesController extends AbstractController
 
     public function edit(int $articleId)
     {
+        if ($this->user === null) {
+            throw new UnauthorizedException();
+        }
+
         if ($this->user->getRole() != 'admin') {
             throw new PermissionException();
         }
@@ -37,10 +41,6 @@ class ArticlesController extends AbstractController
 
         if ($article === null) {
             throw new NotFoundException();
-        }
-
-        if ($this->user === null) {
-            throw new UnauthorizedException();
         }
 
         if (!empty($_POST)) {

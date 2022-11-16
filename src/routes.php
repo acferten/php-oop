@@ -10,7 +10,7 @@ return [
     '~^users/logout$~' => [\MyProject\Controllers\UsersController::class, 'logout'],
     '~^articles/(\d+)/comments$~' => [\MyProject\Controllers\CommentsController::class, 'add'],
     '~^comments/(\d+)/edit$~' => [\MyProject\Controllers\CommentsController::class, 'edit'],
-    '~^adminpage/$~' => [\MyProject\Controllers\AdminController::class, 'articles'],
+    '~^adminpage$~' => [\MyProject\Controllers\AdminController::class, 'articles'],
     '~^adminpage/comments$~' => [\MyProject\Controllers\AdminController::class, 'comments'],
     '~^$~' => [\MyProject\Controllers\MainController::class, 'main'],
 ];

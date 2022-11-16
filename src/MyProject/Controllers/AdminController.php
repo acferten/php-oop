@@ -14,13 +14,19 @@ class AdminController extends AbstractController
 {
     public function articles()
     {
-        $articles = Article::orderByDate();
-        print_r($articles);
-        print_r(gettype($articles));
-        usort($articles, function($a, $b){
-            return $a['createdAt'] <=> $b['createdAt'];
-        });
+        if ($this->user === null) {
+            throw new UnauthorizedException();
+        }
 
+        if ($this->user->getRole() != 'admin') {
+            throw new PermissionException();
+        }
+
+        $articles = Article::orderByDate();
+        krsort($articles);
+//        usort($articles, function($a, $b) {
+//            return strtotime($a['date']) - strtotime($b['date']);
+//        });
         $this->view->renderHtml('adminpage/articles.php', [
             'articles' => $articles,
         ]);
@@ -28,6 +34,18 @@ class AdminController extends AbstractController
 
     public function comments()
     {
+        if ($this->user === null) {
+            throw new UnauthorizedException();
+        }
 
+        if ($this->user->getRole() != 'admin') {
+            throw new PermissionException();
+        }
+
+        $comments = Comment::orderByDate();
+        krsort($comments);
+        $this->view->renderHtml('adminpage/comments.php', [
+            'comments' => $comments,
+        ]);
     }
 }

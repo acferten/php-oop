@@ -105,4 +105,8 @@ class Article extends ActiveRecordEntity
 
         return $this;
     }
+    public function getShortText(){
+        $text = $this->getText();
+        return mb_substr($text, 0, 100);
+    }
 }
