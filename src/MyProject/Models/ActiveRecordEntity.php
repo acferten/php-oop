@@ -37,6 +37,12 @@ abstract class ActiveRecordEntity
         return $db->query('SELECT * FROM ' . static::getTableName() . ';', [], static::class);
     }
 
+    public function orderByDate(): array
+    {
+        $db = $db = Db::getInstance();
+        return $db->query('SELECT * FROM ' . static::getTableName() . 'ORDER BY created_at;', [], static::class);
+    }
+
     /**
      * @param int $id
      * @return static|null
@@ -56,7 +62,7 @@ abstract class ActiveRecordEntity
     {
         $db = $db = Db::getInstance();
         $entities = $db->query(
-            'SELECT * FROM '. static::getTableName() . ' WHERE article_id' . '=:value;',
+            'SELECT * FROM ' . static::getTableName() . ' WHERE article_id' . '=:value;',
             [':value' => $articleid],
             static::class
         );
