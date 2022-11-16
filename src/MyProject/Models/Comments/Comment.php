@@ -2,6 +2,7 @@
 
 namespace MyProject\Models\Comments;
 
+use MyProject\Exceptions\InvalidArgumentException;
 use MyProject\Models\ActiveRecordEntity;
 use MyProject\Models\Users\User;
 
@@ -17,7 +18,7 @@ class Comment extends ActiveRecordEntity
     /** @var string */
     protected $text;
 
-    protected $date;
+    protected $createdAt;
 
     public static function createFromArray(array $fields, User $author, $article): Comment
     {
@@ -29,6 +30,20 @@ class Comment extends ActiveRecordEntity
         $comment->save();
 
         return $comment;
+    }
+
+
+    public function updateFromArray(array $fields): Comment
+    {
+        if (empty($fields['text'])) {
+            throw new InvalidArgumentException('Не передан текст комментария');
+        }
+
+        $this->setText($fields['text']);
+
+        $this->save();
+
+        return $this;
     }
 
     /**
@@ -49,12 +64,12 @@ class Comment extends ActiveRecordEntity
 
     protected static function getTableName(): string
     {
-        return 'articles';
+        return 'comments';
     }
 
-    public function setName(string $name)
+    public function getArticleId(): int
     {
-        $this->name = $name;
+        return $this->articleId;
     }
 
     public function setText(string $text)

@@ -7,6 +7,7 @@ use MyProject\Exceptions\NotFoundException;
 use MyProject\Exceptions\PermissionException;
 use MyProject\Exceptions\UnauthorizedException;
 use MyProject\Models\Articles\Article;
+use MyProject\Models\Comments\Comment;
 use MyProject\Models\Users\User;
 
 class ArticlesController extends AbstractController
@@ -19,9 +20,11 @@ class ArticlesController extends AbstractController
             throw new NotFoundException();
         }
 
+        $comments = Comment::getCommentsByArticleId($articleId);
         $this->view->renderHtml('articles/view.php', [
-            'article' => $article
+            'article' => $article, 'comments' => $comments
         ]);
+
     }
 
     public function edit(int $articleId)

@@ -52,6 +52,17 @@ abstract class ActiveRecordEntity
         return $entities ? $entities[0] : null;
     }
 
+    public static function getCommentsByArticleId(int $articleid): array
+    {
+        $db = $db = Db::getInstance();
+        $entities = $db->query(
+            'SELECT * FROM '. static::getTableName() . ' WHERE article_id' . '=:value;',
+            [':value' => $articleid],
+            static::class
+        );
+        return $entities;
+    }
+
     public function save(): void
     {
         $mappedProperties = $this->mapPropertiesToDbFormat();
