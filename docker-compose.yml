@@ -8,7 +8,9 @@ services:
     container_name: php
     restart: unless-stopped
     volumes:
-      - ./:/var/www
+      - ./www:/var/www
+      - ./src:/var/src
+      - ./templates:/var/templates
 
   #Image for proxy server
   proxy:
@@ -23,15 +25,15 @@ services:
     depends_on:
       - web
     volumes:
-      - ./:/var/www
-      - ./images/proxy/:/etc/nginx/conf.d/
+      - ./www:/var/www
+      - ./src:/var/src
+      - ./images/proxy:/etc/nginx/conf.d/
 
   adminer:
     image: adminer
     restart: unless-stopped
     container_name: adminer
-    ports:
-      - "8080:8080"
+
 
   db:
     image: postgres:alpine
